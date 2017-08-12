@@ -45,4 +45,6 @@ def task_edit(request, task_id=None):
 
 def task_delete(request, task_id):
     """タスクの削除"""
-    return HttpResponse('delete')
+    task = get_object_or_404(Task, pk=task_id)
+    task.delete()
+    return redirect('cms:task_list')
