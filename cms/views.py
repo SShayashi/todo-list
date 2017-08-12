@@ -3,9 +3,10 @@ from django.shortcuts import render
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.views.generic.list import ListView
 
-from cms.models import Task
-from cms.forms import TaskForm
+from cms.models import Task, Comment
+from cms.forms import TaskForm, CommentForm
 
 
 def task_list(request):
@@ -40,11 +41,54 @@ def task_edit(request, task_id=None):
 
     return render(request, 'cms/task_edit.html', dict(form=form, task_id=task_id))
 
-    return HttpResponse('edit')
-
 
 def task_delete(request, task_id):
     """タスクの削除"""
     task = get_object_or_404(Task, pk=task_id)
     task.delete()
     return redirect('cms:task_list')
+
+
+class CommentList(ListView):
+    """感想の一覧"""
+    context_object_name='comment'
+    template_name='cms/comment_list.html'
+    paginate_by = 2  # paging 2 tasks in a page
+
+    def get(self, request, *args, **kwargs):
+        task = get_object_or_404(Task, pk=kwargs['task_id'])  # 親の書籍を読む
+        comment = task.Comments.all().order_by('id')# 書籍の子供の、感想を読む
+        self.object_list = comment
+
+        context = self.get_context_data(object_list=self.object_list, task=task)
+        return self.render_to_response(context)
+
+
+def comment_edit(request, task_id, comment_id=None):
+    """感想の編集"""
+    task = get_object_or_404(Task, pk=task_id)  # 親の書籍を読む
+    if comment_id:      # comment_id が指定されている (修正時)
+        comment = get_object_or_404(Comment, pk=comment_id)
+    else:               # comment_id が指定されていない (追加時)
+        comment = Comment()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)  # POST された request データからフォームを作成
+        if form.is_valid():    # フォームのバリデーション
+            comment = form.save(commit=False)
+            comment.task = task  # この感想の、親の書籍をセット
+            comment.save()
+            return redirect('cms:comment_list', task_id=task_id)
+    else:    # GET の時
+        form = CommentForm(instance=comment)  # comment インスタンスからフォームを作成
+
+    return render(request,
+                  'cms/comment_modify.html',
+                  dict(form=form, task_id=task_id, comment_id=comment_id))
+
+
+def comment_del(request, task_id, comment_id):
+    """感想の削除"""
+    comment = get_object_or_404(Comment, pk=comment_id)
+    comment.delete()
+    return redirect('cms:comment_list', task_id=task_id)
