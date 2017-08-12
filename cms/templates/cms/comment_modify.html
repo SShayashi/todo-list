@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load bootstrap %}
 
-{% block title %}感想の編集{% endblock title %}
+{% block title %}Edit Comment{% endblock title %}
 
 {% block content %}
-    <h3 class="page-header">感想の編集</h3>
+    <h3 class="page-header">Edit Comment</h3>
     {% if comment_id %}
     <form action="{% url 'cms:comment_mod' task_id=task_id comment_id=comment_id %}" method="post" class="form-horizontal" role="form">
     {% else %}
