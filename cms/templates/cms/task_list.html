@@ -17,10 +17,9 @@ table {
       <thead>
         <tr>
           <th>ID</th>
-          <th>書籍名</th>
-          <th>出版社</th>
-          <th>ページ数</th>
-          <th>操作</th>
+          <th>TASK NAME</th>
+          <th>TASK CONTENT</th>
+          <th>OPERATION</th>
         </tr>
       </thead>
       <tbody>
@@ -28,8 +27,7 @@ table {
         <tr>
           <td>{{ task.id }}</td>
           <td>{{ task.name }}</td>
-          <td>{{ task.publisher }}</td>
-          <td>{{ task.page }}</td>
+          <td>{{ task.content }}</td>
           <td>
             <a href="{% url 'cms:task_mod' task_id=task.id %}" class="btn btn-default btn-sm">修正</a>
             <a href="{% url 'cms:task_del' task_id=task.id %}" class="btn btn-default btn-sm">削除</a>
