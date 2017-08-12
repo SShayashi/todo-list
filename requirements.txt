@@ -1,2 +1,5 @@
+configparser==3.5.0
 Django==1.11.4
+django-bootstrap-form==3.3
+PyMySQL==0.7.11
 pytz==2017.2
