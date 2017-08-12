@@ -31,6 +31,7 @@ table {
           <td>
             <a href="{% url 'cms:task_mod' task_id=task.id %}" class="btn btn-default btn-sm">修正</a>
             <a href="{% url 'cms:task_del' task_id=task.id %}" class="btn btn-default btn-sm">削除</a>
+            <a href="{% url 'cms:comment_list' task_id=task.id %}" class="btn btn-default btn-sm btn-primary">感想の一覧</a>
           </td>
         </tr>
         {% endfor %}
