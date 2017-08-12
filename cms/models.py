@@ -14,7 +14,7 @@ class Task(models.Model):
 
 class Comment(models.Model):
     """Comment"""
-    book = models.ForeignKey(Task, verbose_name='Task', related_name='Comments')
+    task = models.ForeignKey(Task, verbose_name='Task', related_name='Comments')
     comment = models.TextField('comment', blank=True)
 
     def __str__(self):
