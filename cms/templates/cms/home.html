@@ -16,18 +16,17 @@
             </ul>
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-            <form action="{% url 'cms:list_add' %}" method="post" class="form-horizontal" role="form">
+            <form action="{% url 'cms:list_add' %}" method="post" class="form-horizontal" role="form" >
             {% csrf_token %}
-            <div class="form-group">
-            <input type="text" class="form-control" name="list_name" required>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group row" >
+                <input type="text" class="form-control col-sm-10" name="list_name" required >
+                <button type="submit" class="btn btn-primary col-sm-2" >＋</button>
             </div>
             </form>
-
             </li>
               {% for list in lists %}
                   <li class="nav-item">
-                    <a class="nav-link" href="#">{{ list.name }}</a>
+                    <a class="nav-link" href="{% url 'cms:task_list' list_id=list.id %}">{{ list.name }}</a>
                   </li>
               {% endfor %}
 
