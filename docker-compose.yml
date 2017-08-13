@@ -5,9 +5,8 @@ services:
     image: mysql
     hostname: mysql_server
     environment:
-      MYSQL_ROOT_PASSWORD: zzz
-      MYSQL_PASSWORD: zzz
-      MYSQL_DATABASE: zzz
+      MYSQL_ROOT_PASSWORD: abc
+      MYSQL_DATABASE: todo
     ports:
       - 3306:3306
 #  web:

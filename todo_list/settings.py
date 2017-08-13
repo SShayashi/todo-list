@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'todo_list.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'zzz',
+        'NAME': 'todo',
         'USER': 'root',
-        'PASSWORD': 'zzz',
+        'PASSWORD': 'abc',
         'HOST': '0.0.0.0',
         'PORT': '3306',
     }
