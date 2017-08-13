@@ -36,16 +36,18 @@ def list_delete(request, list_id):
 def task_list(request, list_id):
     """タスク一覧"""
     todo_list = get_object_or_404(TodoList, pk=list_id)
-    tasks = todo_list.objects.all().order_by('id')
+    tasks = todo_list.Tasks.all()
     return render(request,
                   'cms/task_list.html',     # 使用するテンプレート
-                  {'tasks': tasks})         # テンプレートに渡すデータ
+                  {'tasks': tasks,
+                   'list_id': list_id})         # テンプレートに渡すデータ
 
 
 def task_edit(request, list_id, task_id=None):
     """タスクの編集"""
     if task_id:   # task_id が指定されている (修正時)
-        task = get_object_or_404(Task, pk=task_id)
+        todo_list = get_object_or_404(TodoList, pk=list_id)
+        task = todo_list.Tasks.get(pk=task_id)
     else:         # task_id が指定されていない (追加時)
         task = Task()
 
