@@ -22,6 +22,8 @@ def list_add(request):
         todo_list.name = request.POST['list_name']
         todo_list.save()
         return redirect('cms:home')
+    else:
+        return redirect('cms:home')
 
 
 def list_delete(request, list_id):
@@ -31,15 +33,16 @@ def list_delete(request, list_id):
     return redirect('cms:home')
 
 
-def task_list(request):
+def task_list(request, list_id):
     """タスク一覧"""
-    tasks = Task.objects.all().order_by('id')
+    todo_list = get_object_or_404(TodoList, pk=list_id)
+    tasks = todo_list.objects.all().order_by('id')
     return render(request,
                   'cms/task_list.html',     # 使用するテンプレート
                   {'tasks': tasks})         # テンプレートに渡すデータ
 
 
-def task_edit(request, task_id=None):
+def task_edit(request, list_id, task_id=None):
     """タスクの編集"""
     if task_id:   # task_id が指定されている (修正時)
         task = get_object_or_404(Task, pk=task_id)
@@ -58,7 +61,7 @@ def task_edit(request, task_id=None):
     return render(request, 'cms/task_edit.html', dict(form=form, task_id=task_id))
 
 
-def task_delete(request, task_id):
+def task_delete(request, list_id, task_id):
     """タスクの削除"""
     task = get_object_or_404(Task, pk=task_id)
     task.delete()
