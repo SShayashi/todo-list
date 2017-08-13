@@ -1,6 +1,12 @@
 from django.forms import ModelForm
-from cms.models import Task
-from cms.models import Task, Comment
+from cms.models import TodoList, Task, Comment
+
+
+class TodoListForm(ModelForm):
+    """Todo List Form"""
+    class Meta:
+        model = TodoList
+        fields = ('name',)
 
 
 class TaskForm(ModelForm):

@@ -11,6 +11,16 @@
         {{ list.id }}
         {{ list.name }}
     {% endfor %}
-    <a href="{% url 'cms:home' %}" class="btn btn-default btn-sm">ADD</a>
+
+
+
+
+    <form action="{% url 'cms:list_add' %}" method="post" class="form-horizontal" role="form">
+    {% csrf_token %}
+      <div class="form-group">
+          <input type="text" class="form-control" name="list_name">
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
 
 {% endblock content %}

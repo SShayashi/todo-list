@@ -16,19 +16,19 @@ def all_list(request):
                   {'lists': todo_list})         # テンプレートに渡すデータ
 
 
-def list_add(request, list_name):
+def list_add(request):
     if request.method == 'POST':
         todo_list = TodoList()
-        todo_list.name = list_name
+        todo_list.name = request.POST['list_name']
         todo_list.save()
-        return redirect('cms:all_list')
+        return redirect('cms:home')
 
 
 def list_delete(request, list_id):
     """delete list"""
     task = get_object_or_404(Task, pk=list_id)
     task.delete()
-    return redirect('cms:all_list')
+    return redirect('cms:home')
 
 
 def task_list(request):
