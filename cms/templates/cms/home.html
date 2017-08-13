@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+{% block title %}Home{% endblock title %}
+{% block extrahead %}
+{% endblock %}
+
+{% block content %}
+
+    {% for list in lists %}
+        {{ list.id }}
+        {{ list.name }}
+    {% endfor %}
+    <a href="{% url 'cms:home' %}" class="btn btn-default btn-sm">ADD</a>
+
+{% endblock content %}

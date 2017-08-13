@@ -5,20 +5,30 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.views.generic.list import ListView
 
-from cms.models import Task, Comment
+from cms.models import TodoList, Task, Comment
 from cms.forms import TaskForm, CommentForm
 
 
 def all_list(request):
-    return HttpResponse('LIST')
+    todo_list = TodoList.objects.all().order_by('id')
+    return render(request,
+                  'cms/home.html',     # 使用するテンプレート
+                  {'lists': todo_list})         # テンプレートに渡すデータ
 
 
-def list_add(request):
-    return HttpResponse('ADD')
+def list_add(request, list_name):
+    if request.method == 'POST':
+        todo_list = TodoList()
+        todo_list.name = list_name
+        todo_list.save()
+        return redirect('cms:all_list')
 
 
-def list_delete(request):
-    return HttpResponse('DELTE LIST')
+def list_delete(request, list_id):
+    """delete list"""
+    task = get_object_or_404(Task, pk=list_id)
+    task.delete()
+    return redirect('cms:all_list')
 
 
 def task_list(request):
