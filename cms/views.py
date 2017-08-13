@@ -56,11 +56,11 @@ def task_edit(request, list_id, task_id=None):
         if form.is_valid():    # フォームのバリデーション
             task = form.save(commit=False)
             task.save()
-            return redirect('cms:task_list')
+            return redirect('cms:task_list', list_id=list_id)
     else:    # GET の時
         form = TaskForm(instance=task)  # task インスタンスからフォームを作成
 
-    return render(request, 'cms/task_edit.html', dict(form=form, task_id=task_id))
+    return render(request, 'cms/task_edit.html', dict(form=form, task_id=task_id, list_id=list_id))
 
 
 def task_delete(request, list_id, task_id):

@@ -6,9 +6,9 @@
 {% block content %}
     <h3 class="page-header">書籍の編集</h3>
     {% if task_id %}
-    <form action="{% url 'cms:task_mod' task_id=task_id %}" method="post" class="form-horizontal" role="form">
+    <form action="{% url 'cms:task_mod' task_id=task_id list_id=list_id %}" method="post" class="form-horizontal" role="form">
     {% else %}
-    <form action="{% url 'cms:task_add' %}" method="post" class="form-horizontal" role="form">
+    <form action="{% url 'cms:task_add' list_id=list_id%}" method="post" class="form-horizontal" role="form">
     {% endif %}
       {% csrf_token %}
       {{ form|bootstrap_horizontal }}
@@ -18,5 +18,5 @@
         </div>
       </div>
     </form>
-    <a href="{% url 'cms:task_list' %}" class="btn btn-default btn-sm">戻る</a>
+    <a href="{% url 'cms:task_list' list_id=list_id %}" class="btn btn-default btn-sm">戻る</a>
 {% endblock content %}

@@ -13,7 +13,7 @@ class TaskForm(ModelForm):
     """Task form"""
     class Meta:
         model = Task
-        fields = ('name', 'content')
+        fields = ('list', 'name', 'content')
 
 
 class CommentForm(ModelForm):

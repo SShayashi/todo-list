@@ -29,9 +29,9 @@ table {
           <td>{{ task.name }}</td>
           <td>{{ task.content }}</td>
           <td>
-{#            <a href="{% url 'cms:task_mod' task_id=task.id %}" class="btn btn-default btn-sm">Modify</a>#}
-{#            <a href="{% url 'cms:task_del' task_id=task.id %}" class="btn btn-default btn-sm">Delete</a>#}
-            <a href="{% url 'cms:comment_list' task_id=task.id %}" class="btn btn-default btn-sm btn-primary">感想の一覧</a>
+            <a href="{% url 'cms:task_mod' task_id=task.id list_id=list_id%}" class="btn btn-default btn-sm">Modify</a>
+            <a href="{% url 'cms:task_del' task_id=task.id list_id=list_id%}" class="btn btn-default btn-sm">Delete</a>
+{#            <a href="{% url 'cms:comment_list' task_id=task.id %}" class="btn btn-default btn-sm btn-primary">感想の一覧</a>#}
           </td>
         </tr>
         {% endfor %}
