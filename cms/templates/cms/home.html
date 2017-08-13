@@ -7,16 +7,34 @@
 
 {% block content %}
 
-    {% for list in lists %}
-        {{ list.id }}
-        {{ list.name }}
-    {% endfor %}
-    <form action="{% url 'cms:list_add' %}" method="post" class="form-horizontal" role="form">
-    {% csrf_token %}
-      <div class="form-group">
-          <input type="text" class="form-control" name="list_name" required>
-          <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </form>
+    <div class="row">
+        <nav class="col-sm-3 d-none d-sm-block bg-light sidebar">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-fill">
+                  <p>My Todo List</p>
+                </li>
+            </ul>
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+            <form action="{% url 'cms:list_add' %}" method="post" class="form-horizontal" role="form">
+            {% csrf_token %}
+            <div class="form-group">
+            <input type="text" class="form-control" name="list_name" required>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            </form>
 
+            </li>
+              {% for list in lists %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">{{ list.name }}</a>
+                  </li>
+              {% endfor %}
+
+          </ul>
+        </nav>
+        <div class="col-sm-6 bg-transparent">
+            <h1>Todo</h1>
+        </div>
+    </div>
 {% endblock content %}
