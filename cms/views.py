@@ -9,18 +9,24 @@ from cms.models import Task, Comment
 from cms.forms import TaskForm, CommentForm
 
 
+def all_list(request):
+    return HttpResponse('LIST')
+
+
+def list_add(request):
+    return HttpResponse('ADD')
+
+
+def list_delete(request):
+    return HttpResponse('DELTE LIST')
+
+
 def task_list(request):
     """タスク一覧"""
-    # return HttpResponse('list')
     tasks = Task.objects.all().order_by('id')
     return render(request,
                   'cms/task_list.html',     # 使用するテンプレート
                   {'tasks': tasks})         # テンプレートに渡すデータ
-
-
-def task_add(request):
-    """タスク追加"""
-    return HttpResponse('add')
 
 
 def task_edit(request, task_id=None):
