@@ -3,6 +3,16 @@
 
 {% block title %}Home{% endblock title %}
 {% block extrahead %}
+<script>
+$(function() {
+  $('.del_confirm').on('click', function () {
+     $("#del_pk").text($(this).attr("pk"));
+     $("#del_name").text($(this).attr("name"));
+     $('#del_url').attr('href', $(this).attr("url"));
+  });
+});
+</script>
+
 {% endblock %}
 {% block content %}
     <div class='container'>
@@ -28,8 +38,9 @@
             </li>
               {% for list in lists %}
                   <li class="nav-item" style="margin: 5px;">
-                    <button class="btn btn-sm btn-danger" data-toggle="modal"
-                            data-target="#deleteModal" pk="{{ comment.id }}">-</button>
+                    <button class="btn btn-sm btn-danger del_confirm" data-toggle="modal"
+                            data-target="#deleteModal" pk="{{ list.id }}" name="{{ list.name }}"
+                            url="{% url 'cms:list_del' list_id=list.id %}">-</button>
                     <a class="col-sm-9" href="{% url 'cms:task_list' list_id=list.id %}">{{ list.name }}</a>
                   </li>
               {% endfor %}
@@ -84,7 +95,7 @@
         <h4 class="modal-title" id="deleteModalLabel">Confirmation</h4>
       </div>
       <div class="modal-body">
-        <p>Do you delete list ID: <span id="del_pk"></span>？</p>
+        <p>Do you delete list "<span id="del_name"></span>"？</p>
       </div>
       <div class="modal-footer">
         <a href="#" class="btn btn-primary" id="del_url">OK</a>

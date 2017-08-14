@@ -28,8 +28,8 @@ def list_add(request):
 
 def list_delete(request, list_id):
     """delete list"""
-    task = get_object_or_404(Task, pk=list_id)
-    task.delete()
+    todo_list = get_object_or_404(TodoList, pk=list_id)
+    todo_list.delete()
     return redirect('cms:home')
 
 
