@@ -23,7 +23,7 @@ $(function() {
         <nav class="col-md-3 d-md-block bg-light sidebar">
             <ul class="nav nav-pills flex-column">
                 <li class="nav-fill">
-                  <h2>My Todo List</h2>
+                  <h2>My List</h2>
                 </li>
             </ul>
           <ul class="nav nav-pills flex-column">
@@ -31,7 +31,7 @@ $(function() {
             <form action="{% url 'cms:list_add' %}" method="post" class="form-horizontal"  >
             {% csrf_token %}
             <div class="form-group row" style="margin-bottom:0px;">
-                <input type="text" class="form-control col-sm-10" name="list_name" placeholder="Add todo list" required >
+                <input type="text" class="form-control col-sm-10" name="list_name" placeholder="Add list" required >
                 <button type="submit" class="btn btn-primary col-sm-auto" >＋</button>
             </div>
             </form>
