@@ -9,6 +9,10 @@ from cms.models import TodoList, Task, Comment
 from cms.forms import TaskForm, CommentForm
 
 
+def handle_page_not_found(request):
+    return redirect('cms:home')
+
+
 def all_list(request):
     todo_list = TodoList.objects.all().order_by('id')
     return render(request,
