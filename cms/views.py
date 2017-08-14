@@ -35,12 +35,26 @@ def list_delete(request, list_id):
 
 def task_list(request, list_id):
     """タスク一覧"""
+    todo_lists = TodoList.objects.all().order_by('id')
     todo_list = get_object_or_404(TodoList, pk=list_id)
     tasks = todo_list.Tasks.all()
     return render(request,
-                  'cms/task_list.html',     # 使用するテンプレート
-                  {'tasks': tasks,
-                   'list_id': list_id})         # テンプレートに渡すデータ
+                  'cms/home.html',     # 使用するテンプレート
+                  {'lists': todo_lists,
+                   'tasks': tasks,
+                   'list': todo_list})         # テンプレートに渡すデータ
+
+
+def task_add(request, list_id):
+
+    if request.method == 'POST':
+        task = Task()
+        task.list_id = list_id
+        task.name = request.POST['task_name']
+        task.save()
+        return redirect('cms:task_list', list_id)
+    else:
+        return redirect('cms:task_list', list_id)
 
 
 def task_edit(request, list_id, task_id=None):
@@ -48,26 +62,29 @@ def task_edit(request, list_id, task_id=None):
     if task_id:   # task_id が指定されている (修正時)
         todo_list = get_object_or_404(TodoList, pk=list_id)
         task = todo_list.Tasks.get(pk=task_id)
+        task.is_completed = True
+        task.save()
+        return redirect('cms:task_list', list_id)
     else:         # task_id が指定されていない (追加時)
-        task = Task()
-
-    if request.method == 'POST':
-        form = TaskForm(request.POST, instance=task)  # POST された request データからフォームを作成
-        if form.is_valid():    # フォームのバリデーション
-            task = form.save(commit=False)
-            task.save()
-            return redirect('cms:task_list', list_id=list_id)
-    else:    # GET の時
-        form = TaskForm(instance=task)  # task インスタンスからフォームを作成
-
-    return render(request, 'cms/task_edit.html', dict(form=form, task_id=task_id, list_id=list_id))
+        return redirect('cms:task_list', list_id)
+    #
+    # if request.method == 'POST':
+    #     form = TaskForm(request.POST, instance=task)  # POST された request データからフォームを作成
+    #     if form.is_valid():    # フォームのバリデーション
+    #         task = form.save(commit=False)
+    #         task.save()
+    #         return redirect('cms:task_list', list_id=list_id)
+    # else:    # GET の時
+    #     form = TaskForm(instance=task)  # task インスタンスからフォームを作成
+    #
+    # return render(request, 'cms/task_edit.html', dict(form=form, task_id=task_id, list_id=list_id))
 
 
 def task_delete(request, list_id, task_id):
     """タスクの削除"""
     task = get_object_or_404(Task, pk=task_id)
     task.delete()
-    return redirect('cms:task_list')
+    return redirect('cms:task_list', list_id)
 
 
 class CommentList(ListView):

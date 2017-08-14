@@ -4,11 +4,18 @@
 {% block title %}Home{% endblock title %}
 {% block extrahead %}
 {% endblock %}
-
 {% block content %}
+<script type="text/javascript">
+$(".form-inline").click(function () {
+    alert( "Handler for .click() called." );
+});
+</script>
+
+    <div class='container'>
+    <h1>TWITTER BOOTSTRAP TUTORIAL</h1>
 
     <div class="row">
-        <nav class="col-sm-3 d-none d-sm-block bg-light sidebar">
+        <nav class="col-md-3 d-md-block bg-light sidebar">
             <ul class="nav nav-pills flex-column">
                 <li class="nav-fill">
                   <p>My Todo List</p>
@@ -20,7 +27,7 @@
             {% csrf_token %}
             <div class="form-group row" >
                 <input type="text" class="form-control col-sm-10" name="list_name" required >
-                <button type="submit" class="btn btn-primary col-sm-2" >＋</button>
+                <button type="submit" class="btn btn-primary col-sm-auto" >＋</button>
             </div>
             </form>
             </li>
@@ -29,11 +36,52 @@
                     <a class="nav-link" href="{% url 'cms:task_list' list_id=list.id %}">{{ list.name }}</a>
                   </li>
               {% endfor %}
-
           </ul>
         </nav>
-        <div class="col-sm-6 bg-transparent">
-            <h1>Todo</h1>
+        <div class="col-md-6">
+            {% if list %}
+            <div class="todolist not-done">
+             <h1>{{ list.name }}</h1>
+
+                <form action="{% url 'cms:task_add' list_id=list.id%}" method="post" class="form-inline" role="form" >
+                    {% csrf_token %}
+                    <div class="form-group" >
+                        <input type="text" class="form-control" name="task_name" placeholder="Add todo" required >
+                        <button type="submit" class="btn btn-primary" >ADD</button>
+                    </div>
+                </form>
+
+                <ul id="sortable" class="list-unstyled">
+                    {% for task in tasks %}
+                        <form action="{% url 'cms:task_mod' list_id=list.id task_id=task.id %}" class="form-inline">
+                            <button type="submit" class="btn btn-success" >✔</button>
+                        </form>
+                        <form action="{% url 'cms:task_del' list_id=list.id task_id=task.id %}" class="form-inline">
+                            <button class="btn btn-danger" >✖︎</button>
+                        </form>
+{#                        <form action="{% url 'cms:task_add' list_id=list.id%}" method="post" class="form-inline" role="form" >#}
+{#                        {% csrf_token %}#}
+{#                        <div class="form-group" >#}
+{##}
+{#                            <button type="submit" class="btn btn-success" >✔</button>#}
+{#                            <button type="submit" class="btn btn-danger" >✖︎</button>#}
+{#                        </div>#}
+{#                        </form>#}
+                        <li class="ui-state-default">
+                        <div class="checkbox">
+                        <label>
+                        <input type="checkbox" value="{{ task.id }}" />{{ task.name }}</label>
+                        </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="todo-footer">
+                    <strong><span class="count-todos"></span></strong> Items Left
+                </div>
+            </div>
+            {% else %}
+            {% endif %}
         </div>
+    </div>
     </div>
 {% endblock content %}
