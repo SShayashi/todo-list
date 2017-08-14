@@ -10,8 +10,4 @@ urlpatterns = [
     url(r'^home/task/add/(?P<list_id>\d+)/$', views.task_add, name='task_add'),
     url(r'^home/task/mod/(?P<list_id>\d+)/(?P<task_id>\d+)/$', views.task_edit, name='task_mod'),
     url(r'^home/task/del/(?P<list_id>\d+)/(?P<task_id>\d+)/$', views.task_delete, name='task_del'),
-    url(r'^comment/(?P<task_id>\d+)/$', views.CommentList.as_view(), name='comment_list'),
-    url(r'^comment/add/(?P<task_id>\d+)/$', views.comment_edit, name='comment_add'),
-    url(r'^comment/mod/(?P<task_id>\d+)/(?P<comment_id>\d+)/$', views.comment_edit, name='comment_mod'),
-    url(r'^comment/del/(?P<task_id>\d+)/(?P<comment_id>\d+)/$', views.comment_del, name='comment_del'),
 ]
