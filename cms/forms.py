@@ -15,9 +15,3 @@ class TaskForm(ModelForm):
         model = Task
         fields = ('list', 'name', 'content')
 
-
-class CommentForm(ModelForm):
-    """感想のフォーム"""
-    class Meta:
-        model = Comment
-        fields = ('comment', )
