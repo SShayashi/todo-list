@@ -8,6 +8,7 @@
     <div class='container'>
     <h1>Simple Todo List App</h1>
 
+
     <div class="row">
         <nav class="col-md-3 d-md-block bg-light sidebar">
             <ul class="nav nav-pills flex-column">
@@ -17,17 +18,19 @@
             </ul>
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-            <form action="{% url 'cms:list_add' %}" method="post" class="form-horizontal" role="form" >
+            <form action="{% url 'cms:list_add' %}" method="post" class="form-horizontal"  >
             {% csrf_token %}
-            <div class="form-group row" >
+            <div class="form-group row" style="margin-bottom:0px;">
                 <input type="text" class="form-control col-sm-10" name="list_name" placeholder="Add todo list" required >
                 <button type="submit" class="btn btn-primary col-sm-auto" >＋</button>
             </div>
             </form>
             </li>
               {% for list in lists %}
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'cms:task_list' list_id=list.id %}">{{ list.name }}</a>
+                  <li class="nav-item" style="margin: 5px;">
+                    <button class="btn btn-sm btn-danger" data-toggle="modal"
+                            data-target="#deleteModal" pk="{{ comment.id }}">-</button>
+                    <a class="col-sm-9" href="{% url 'cms:task_list' list_id=list.id %}">{{ list.name }}</a>
                   </li>
               {% endfor %}
           </ul>
@@ -72,4 +75,22 @@
         </div>
     </div>
     </div>
+{# Delete confirmation #}
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="deleteModalLabel">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <p>Do you delete list ID: <span id="del_pk"></span>？</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-primary" id="del_url">OK</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
