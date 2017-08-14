@@ -55,15 +55,14 @@ $(function() {
                     {% csrf_token %}
                     <div class="form-group" >
                         <input type="text" class="form-control" name="task_name" placeholder="Add todo" required >
-                        <button type="submit" class="btn btn-primary" >ADD</button>
+                        <button type="submit" class="btn btn-primary" >＋</button>
                     </div>
                 </form>
 
                 <table class="table table-hover">
                   <tbody>
                     {% for task in tasks %}
-                        {% if task.is_completed %}
-                        {% else %}
+                        {% if not task.is_completed %}
                         <tr>
                           <th scope="row">
                             <form action="{% url 'cms:task_mod' list_id=list.id task_id=task.id %}" class="form-inline">
@@ -80,6 +79,25 @@ $(function() {
                           </td>
                         </tr>
                         {% endif %}
+                    {% endfor %}
+                    {% for task in tasks %}
+                        {% if task.is_completed %}
+                            <tr>
+                          <th scope="row">
+{#                            <form action="{% url 'cms:task_mod' list_id=list.id task_id=task.id %}" class="form-inline">#}
+{#                            <button type="submit" class="btn btn-success" >✔</button>#}
+{#                            </form>#}
+                          </th>
+                          <td>
+                              <form action="{% url 'cms:task_del' list_id=list.id task_id=task.id %}" class="form-inline">
+                                <button class="btn btn-danger" >✖︎</button>
+                              </form>
+                          </td>
+                          <td>
+                              <h4><s>{{ task.name }}</s></h4>
+                          </td>
+                        </tr>
+                     {% endif %}
                     {% endfor %}
                   </tbody>
                 </table>
